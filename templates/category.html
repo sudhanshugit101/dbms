@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Categories</title>
+  <style>
+    /* Navbar styles */
+    .navbar {
+      overflow: hidden;
+      background-color: #4caf50; /* Light green accent color */
+    }
+
+    .navbar a {
+      float: left;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 20px;
+      text-decoration: none;
+    }
+    h2 {
+      text-align: center;
+    }
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      /* align-items: center; */
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th,
+    td {
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #f2f2f2;
+    }
+    form {
+      display: inline;
+    }
+    input[type="text"] {
+      padding: 4px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    button {
+      padding: 4px 8px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .container{
+      width: 95%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="navbar">
+      <a href="/">Home</a>
+      <a href="/patents">Patents</a>
+      <a href="/inventors">Inventors</a>
+      <a href="/assignees">Assignees</a>
+      <a href="/categories">Categories</a>
+      <a href="/references">References</a>
+    </div>
+    <h2>Categories</h2>
+
+    <!-- Table to display categories -->
+    <table>
+      <tr>
+        <th>Category ID</th>
+        <th>Category Name</th>
+        <th>Description</th>
+        <th>Parent Category ID</th>
+        <th>Created At</th>
+        <th>Actions</th>
+      </tr>
+      {% for category in categories %}
+      <tr>
+        <td>{{ category.CategoryID }}</td>
+        <td>{{ category.CategoryName }}</td>
+        <td>{{ category.Description }}</td>
+        <td>{{ category.ParentCategoryID }}</td>
+        <td>{{ category.CreatedAt }}</td>
+        <td>
+          <form
+            method="POST"
+            action="/modify_category/{{ category.CategoryID }}"
+          >
+            <input
+              type="hidden"
+              name="category_id"
+              value="{{ category.CategoryID }}"
+            />
+            <input
+              type="text"
+              name="category_name"
+              value="{{ category.CategoryName }}"
+            />
+            <input
+              type="text"
+              name="description"
+              value="{{ category.Description }}"
+            />
+            <input
+              type="text"
+              name="parent_category_id"
+              value="{{ category.ParentCategoryID }}"
+            />
+            <input
+              type="text"
+              name="created_at"
+              value="{{ category.CreatedAt }}"
+            />
+            <button type="submit">Modify</button>
+          </form>
+          <form
+            method="POST"
+            action="/delete_category/{{ category.CategoryID }}"
+          >
+            <input
+              type="hidden"
+              name="category_id"
+              value="{{ category.CategoryID }}"
+            />
+            <button type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <!-- Form to add new category -->
+    <form method="POST" action="/add_category">
+      <input
+        type="text"
+        name="category_name"
+        placeholder="Category Name"
+        required
+      />
+      <input
+        type="text"
+        name="description"
+        placeholder="Description"
+        required
+      />
+      <input
+        type="text"
+        name="parent_category_id"
+        placeholder="Parent Category ID"
+        required
+      />
+      <input
+        type="text"
+        name="created_at"
+        placeholder="Created At"
+        required
+      />
+      <button type="submit">Add Category</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>References</title>
+  <style>
+    /* Navbar styles */
+    .navbar {
+      overflow: hidden;
+      background-color: #4caf50; /* Light green accent color */
+    }
+
+    .navbar a {
+      float: left;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 20px;
+      text-decoration: none;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      width: 95%;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    th,
+    td {
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f2f2f2;
+    }
+
+    form {
+      display: inline;
+    }
+
+    input[type="text"] {
+      padding: 4px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    button {
+      padding: 4px 8px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="navbar">
+      <a href="/">Home</a>
+      <a href="/patents">Patents</a>
+      <a href="/inventors">Inventors</a>
+      <a href="/assignees">Assignees</a>
+      <a href="/categories">Categories</a>
+      <a href="/references">References</a>
+    </div>
+    <h2>References</h2>
+
+    <!-- Table to display references -->
+    <table>
+      <tr>
+        <th>Reference ID</th>
+        <th>Patent ID</th>
+        <th>Citation Type</th>
+        <th>Reference Patent ID</th>
+        <th>Publication Date</th>
+        <th>Actions</th>
+      </tr>
+      {% for reference in references %}
+      <tr>
+        <td>{{ reference.ReferenceID }}</td>
+        <td>{{ reference.PatentID }}</td>
+        <td>{{ reference.CitationType }}</td>
+        <td>{{ reference.ReferencePatentID }}</td>
+        <td>{{ reference.PublicationDate }}</td>
+        <td>
+          <form method="POST" action="/modify_reference/{{ reference.ReferenceID }}">
+            <input type="hidden" name="reference_id" value="{{ reference.ReferenceID }}" />
+            <input type="text" name="patent_id" value="{{ reference.PatentID }}" />
+            <input type="text" name="citation_type" value="{{ reference.CitationType }}" />
+            <input type="text" name="reference_patent_id" value="{{ reference.ReferencePatentID }}" />
+            <input type="text" name="publication_date" value="{{ reference.PublicationDate }}" />
+            <button type="submit">Modify</button>
+          </form>
+          <form method="POST" action="/delete_reference/{{ reference.ReferenceID }}">
+            <input type="hidden" name="reference_id" value="{{ reference.ReferenceID }}" />
+            <button type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <!-- Form to add new reference -->
+    <form method="POST" action="/add_reference">
+      <input type="text" name="patent_id" placeholder="Patent ID" required />
+      <input type="text" name="citation_type" placeholder="Citation Type" required />
+      <input type="text" name="reference_patent_id" placeholder="Reference Patent ID" required />
+      <input type="text" name="publication_date" placeholder="Publication Date" required />
+      <button type="submit">Add Reference</button>
+    </form>
+  </div>
+</body>
+</html>

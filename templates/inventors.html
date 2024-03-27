@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventors</title>
+  <style>
+    /* Navbar styles */
+    .navbar {
+      overflow: hidden;
+      background-color: #4caf50; /* Light green accent color */
+    }
+
+    .navbar a {
+      float: left;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 20px;
+      text-decoration: none;
+    }
+
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      /* align-items: center; */
+    }
+
+    .container{
+      width: 95%;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    th,
+    td {
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f2f2f2;
+    }
+
+    form {
+      display: inline;
+    }
+
+    input[type="text"] {
+      padding: 4px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    button {
+      padding: 4px 8px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .container {
+      width: 100%;
+    }
+
+    h2 {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="navbar">
+      <a href="/">Home</a>
+      <a href="/patents">Patents</a>
+      <a href="/inventors">Inventors</a>
+      <a href="/assignees">Assignees</a>
+      <a href="/categories">Categories</a>
+      <a href="/references">References</a>
+    </div>
+    <h2>Inventors</h2>
+
+    <!-- Table to display inventors -->
+    <table>
+      <tr>
+        <th>Inventor ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Organization</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+      {% for inventor in inventors %}
+      <tr>
+        <td>{{ inventor.InventorID }}</td>
+        <td>{{ inventor.FirstName }}</td>
+        <td>{{ inventor.LastName }}</td>
+        <td>{{ inventor.Organization }}</td>
+        <td>{{ inventor.Email }}</td>
+        <td>
+          <form method="POST" action="/modify_inventor/{{ inventor.InventorID }}">
+            <input type="hidden" name="inventor_id" value="{{ inventor.InventorID }}">
+            <input type="text" name="first_name" value="{{ inventor.FirstName }}">
+            <input type="text" name="last_name" value="{{ inventor.LastName }}">
+            <input type="text" name="organization" value="{{ inventor.Organization }}">
+            <input type="text" name="email" value="{{ inventor.Email }}">
+            <button type="submit">Modify</button>
+          </form>
+          <form method="POST" action="/delete_inventor/{{ inventor.InventorID }}">
+            <input type="hidden" name="inventor_id" value="{{ inventor.InventorID }}">
+            <button type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <!-- Form to add new inventor -->
+    <form method="POST" action="/add_inventor">
+      <input type="text" name="first_name" placeholder="First Name" required>
+      <input type="text" name="last_name" placeholder="Last Name" required>
+      <input type="text" name="organization" placeholder="Organization" required>
+      <input type="text" name="email" placeholder="Email" required>
+      <button type="submit">Add Inventor</button>
+    </form>
+  </div>
+</body>
+</html>
