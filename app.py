@@ -142,7 +142,7 @@ def add_patent():
         db.session.add(new_patent)
         db.session.commit()
 
-    return redirect(url_for('index'))
+    return redirect(url_for('patents'))
 
 @app.route('/add_inventor', methods=['POST'])
 def add_inventor():
@@ -157,7 +157,7 @@ def add_inventor():
         db.session.add(new_inventor)
         db.session.commit()
 
-    return redirect(url_for('index'))
+    return redirect(url_for('inventors'))
 
 @app.route('/add_assignee', methods=['POST'])
 def add_assignee():
@@ -172,7 +172,7 @@ def add_assignee():
         db.session.add(new_assignee)
         db.session.commit()
 
-    return redirect(url_for('index'))
+    return redirect(url_for('asignees'))
 
 @app.route('/add_category', methods=['POST'])
 def add_category():
@@ -187,7 +187,7 @@ def add_category():
         db.session.add(new_category)
         db.session.commit()
 
-    return redirect(url_for('index'))
+    return redirect(url_for('categories'))
 
 @app.route('/add_reference', methods=['POST'])
 def add_reference():
@@ -202,7 +202,7 @@ def add_reference():
         db.session.add(new_reference)
         db.session.commit()
 
-    return redirect(url_for('index'))
+    return redirect(url_for('references'))
 
 
 
@@ -217,7 +217,7 @@ def modify_patent(id):
 
         db.session.commit()
 
-    return redirect(url_for('index'))
+    return redirect(url_for('patents'))
 
 @app.route('/modify_inventor/<int:id>', methods=['POST'])
 def modify_inventor(id):
@@ -230,7 +230,7 @@ def modify_inventor(id):
 
         db.session.commit()
 
-    return redirect(url_for('index'))
+    return redirect(url_for('inventors'))
 
 @app.route('/modify_assignee/<int:id>', methods=['POST'])
 def modify_assignee(id):
@@ -243,7 +243,7 @@ def modify_assignee(id):
 
         db.session.commit()
 
-    return redirect(url_for('index'))
+    return redirect(url_for('assignees'))
 
 @app.route('/modify_category/<int:id>', methods=['POST'])
 def modify_category(id):
@@ -256,7 +256,7 @@ def modify_category(id):
 
         db.session.commit()
 
-    return redirect(url_for('index'))
+    return redirect(url_for('categories'))
 
 @app.route('/modify_reference/<int:id>', methods=['POST'])
 def modify_reference(id):
@@ -269,7 +269,7 @@ def modify_reference(id):
 
         db.session.commit()
 
-    return redirect(url_for('index'))
+    return redirect(url_for('references'))
 
 
 
@@ -280,35 +280,35 @@ def delete_patent(id):
     patent = Patent.query.get_or_404(id)
     db.session.delete(patent)
     db.session.commit()
-    return redirect(url_for('index'))
+    return redirect(url_for('patents'))
 
 @app.route('/delete_inventor/<int:id>', methods=['POST'])
 def delete_inventor(id):
     inventor = Inventor.query.get_or_404(id)
     db.session.delete(inventor)
     db.session.commit()
-    return redirect(url_for('index'))
+    return redirect(url_for('inventors'))
 
 @app.route('/delete_assignee/<int:id>', methods=['POST'])
 def delete_assignee(id):
     assignee = Assignee.query.get_or_404(id)
     db.session.delete(assignee)
     db.session.commit()
-    return redirect(url_for('index'))
+    return redirect(url_for('assignees'))
 
 @app.route('/delete_category/<int:id>', methods=['POST'])
 def delete_category(id):
     category = Category.query.get_or_404(id)
     db.session.delete(category)
     db.session.commit()
-    return redirect(url_for('index'))
+    return redirect(url_for('categories'))
 
 @app.route('/delete_reference/<int:id>', methods=['POST'])
 def delete_reference(id):
     reference = Reference.query.get_or_404(id)
     db.session.delete(reference)
     db.session.commit()
-    return redirect(url_for('index'))
+    return redirect(url_for('references'))
 
 
 if __name__ == '__main__':
